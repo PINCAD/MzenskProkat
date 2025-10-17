@@ -1,9 +1,6 @@
-// build.gradle.kts (Module: app)
-
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    id("org.jetbrains.kotlin.plugin.compose") version "1.9.22"
 }
 
 android {
@@ -46,6 +43,10 @@ android {
         compose = true
     }
 
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.10"
+    }
+
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
@@ -60,7 +61,7 @@ dependencies {
     implementation("androidx.activity:activity-compose:1.8.2")
 
     // Jetpack Compose
-    val composeBom = platform("androidx.compose:compose-bom:2024.01.00")
+    val composeBom = platform("androidx.compose:compose-bom:2024.02.00")
     implementation(composeBom)
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
@@ -78,13 +79,6 @@ dependencies {
     // Coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
-
-    // Room Database (для локального кэширования, если потребуется)
-    val roomVersion = "2.6.1"
-    implementation("androidx.room:room-runtime:$roomVersion")
-    implementation("androidx.room:room-ktx:$roomVersion")
-    // annotationProcessor("androidx.room:room-compiler:$roomVersion") // Для Java
-    // kapt("androidx.room:room-compiler:$roomVersion") // Раскомментировать при использовании
 
     // Retrofit (для API, если потребуется)
     implementation("com.squareup.retrofit2:retrofit:2.9.0")

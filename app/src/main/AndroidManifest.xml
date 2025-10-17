@@ -6,9 +6,6 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
-    <!-- Разрешения для звонков и отправки email -->
-    <uses-permission android:name="android.permission.CALL_PHONE" />
-
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -27,20 +24,6 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-
-        <!-- Intent filters для звонков и email -->
-        <activity android:name=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="tel" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.SENDTO" />
-                <data android:scheme="mailto" />
             </intent-filter>
         </activity>
 

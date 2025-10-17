@@ -29,6 +29,159 @@ fun ContactsScreen() {
     ) {
         // Заголовок
         item {
+            Card(
+                colors = CardDefaults.cardColors(
+                    containerColor = MaterialTheme.colorScheme.primaryContainer
+                )
+            ) {
+                Column(
+                    modifier = Modifier.padding(20.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Build,
+                        contentDescription = null,
+                        modifier = Modifier.size(64.dp),
+                        tint = MaterialTheme.colorScheme.primary
+                    )
+                    Spacer(modifier = Modifier.height(12.dp))
+                    Text(
+                        text = "Мценскпрокат",
+                        style = MaterialTheme.typography.headlineMedium,
+                        fontWeight = FontWeight.Bold
+                    )
+                    Text(
+                        text = "Металлургический завод",
+                        style = MaterialTheme.typography.titleMedium
+                    )
+                }
+            }
+        }
+
+        // Телефон
+        item {
+            ContactCard(
+                icon = Icons.Default.Phone,
+                title = "Телефон",
+                value = contactInfo.phone,
+                description = "Позвоните нам",
+                onClick = {
+                    val intent = Intent(Intent.ACTION_DIAL).apply {
+                        data = Uri.parse("tel:${contactInfo.phone.replace(Regex("[^0-9+]"), "")}")
+                    }
+                    context.startActivity(intent)
+                }
+            )
+        }
+
+        // Email
+        item {
+            ContactCard(
+                icon = Icons.Default.Email,
+                title = "Электронная почта",
+                value = contactInfo.email,
+                description = "Напишите нам",
+                onClick = {
+                    val intent = Intent(Intent.ACTION_SENDTO).apply {
+                        data = Uri.parse("mailto:${contactInfo.email}")
+                        putExtra(Intent.EXTRA_SUBJECT, "Запрос информации")
+                    }
+                    context.startActivity(Intent.createChooser(intent, "Отправить email"))
+                }
+            )
+        }
+
+        // Адрес
+        item {
+            ContactCard(
+                icon = Icons.Default.Place,
+                title = "Адрес",
+                value = contactInfo.address,
+                description = "Наше местоположение",
+                onClick = null
+            )
+        }
+
+        // Сайт
+        item {
+            ContactCard(
+                icon = Icons.Default.Language,
+                title = "Веб-сайт",
+                value = contactInfo.website,
+                description = "Посетите наш сайт",
+                onClick = {
+                    val intent = Intent(Intent.ACTION_VIEW).apply {
+                        data = Uri.parse(contactInfo.website)
+                    }
+                    context.startActivity(intent)
+                }
+            )
+        }
+
+        // Информация о времени работы
+        item {
+            Card {
+                Column(
+                    modifier = Modifier.padding(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.AccessTime,
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.primary
+                        )
+                        Spacer(modifier = Modifier.width(12.dp))
+                        Text(
+                            text = "Время работы",
+                            style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+                    Divider()
+                    WorkingHoursRow("Понедельник - Пятница", "9:00 - 18:00")
+                    WorkingHoursRow("Суббота - Воскресенье", "Выходной")
+                }
+            }
+        }
+
+        // Дополнительная информация
+        item {
+            Card(
+                colors = CardDefaults.cardColors(
+                    containerColor = MaterialTheme.colorScheme.secondaryContainer
+                )
+            ) {
+                Column(
+                    modifier = Modifier.padding(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Info,
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.secondary
+                        )
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text(
+                            text = "Как с нами связаться",
+                            style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+                    Text(
+                        text = "Для получения консультации, оформления заказа или по любым другим вопросам свяжитесь с нами по телефону или электронной почте. Мы готовы обсудить условия взаимовыгодного сотрудничества.",
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+                }
+            }
+        }
+
+        item {
             Spacer(modifier = Modifier.height(16.dp))
         }
     }
@@ -107,157 +260,4 @@ fun WorkingHoursRow(day: String, hours: String) {
             fontWeight = FontWeight.Bold
         )
     }
-} {
-    Card(
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.primaryContainer
-        )
-    ) {
-        Column(
-            modifier = Modifier.padding(20.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Icon(
-                imageVector = Icons.Default.Build,
-                contentDescription = null,
-                modifier = Modifier.size(64.dp),
-                tint = MaterialTheme.colorScheme.primary
-            )
-            Spacer(modifier = Modifier.height(12.dp))
-            Text(
-                text = "Мценскпрокат",
-                style = MaterialTheme.typography.headlineMedium,
-                fontWeight = FontWeight.Bold
-            )
-            Text(
-                text = "Металлургический завод",
-                style = MaterialTheme.typography.titleMedium
-            )
-        }
-    }
 }
-
-// Телефон
-item {
-    ContactCard(
-        icon = Icons.Default.Phone,
-        title = "Телефон",
-        value = contactInfo.phone,
-        description = "Позвоните нам",
-        onClick = {
-            val intent = Intent(Intent.ACTION_DIAL).apply {
-                data = Uri.parse("tel:${contactInfo.phone.replace(Regex("[^0-9+]"), "")}")
-            }
-            context.startActivity(intent)
-        }
-    )
-}
-
-// Email
-item {
-    ContactCard(
-        icon = Icons.Default.Email,
-        title = "Электронная почта",
-        value = contactInfo.email,
-        description = "Напишите нам",
-        onClick = {
-            val intent = Intent(Intent.ACTION_SENDTO).apply {
-                data = Uri.parse("mailto:${contactInfo.email}")
-                putExtra(Intent.EXTRA_SUBJECT, "Запрос информации")
-            }
-            context.startActivity(Intent.createChooser(intent, "Отправить email"))
-        }
-    )
-}
-
-// Адрес
-item {
-    ContactCard(
-        icon = Icons.Default.Place,
-        title = "Адрес",
-        value = contactInfo.address,
-        description = "Наше местоположение",
-        onClick = null
-    )
-}
-
-// Сайт
-item {
-    ContactCard(
-        icon = Icons.Default.Language,
-        title = "Веб-сайт",
-        value = contactInfo.website,
-        description = "Посетите наш сайт",
-        onClick = {
-            val intent = Intent(Intent.ACTION_VIEW).apply {
-                data = Uri.parse(contactInfo.website)
-            }
-            context.startActivity(intent)
-        }
-    )
-}
-
-// Информация о времени работы
-item {
-    Card {
-        Column(
-            modifier = Modifier.padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Icon(
-                    imageVector = Icons.Default.AccessTime,
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.primary
-                )
-                Spacer(modifier = Modifier.width(12.dp))
-                Text(
-                    text = "Время работы",
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.Bold
-                )
-            }
-            Divider()
-            WorkingHoursRow("Понедельник - Пятница", "9:00 - 18:00")
-            WorkingHoursRow("Суббота - Воскресенье", "Выходной")
-        }
-    }
-}
-
-// Дополнительная информация
-item {
-    Card(
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.secondaryContainer
-        )
-    ) {
-        Column(
-            modifier = Modifier.padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Info,
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.secondary
-                )
-                Spacer(modifier = Modifier.width(8.dp))
-                Text(
-                    text = "Как с нами связаться",
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.Bold
-                )
-            }
-            Text(
-                text = "Для получения консультации, оформления заказа или по любым другим вопросам свяжитесь с нами по телефону или электронной почте. Мы готовы обсудить условия взаимовыгодного сотрудничества.",
-                style = MaterialTheme.typography.bodyMedium
-            )
-        }
-    }
-}
-
-item
